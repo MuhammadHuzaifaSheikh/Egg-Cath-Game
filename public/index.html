@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        width: 100%;
+        background-image: url("game_background_130-.jpg");
+        height: 100vh;
+        background-repeat: no-repeat;
+        background-size: cover;
+        overflow: hidden;
+    }
+
+
+</style>
+<body>
+
+
+<script>
+
+
+
+
+
+    var n = 0;
+    var n2 = 0;
+    var score = document.createElement('h1');
+    score.innerText = 'Score '+ n;
+    document.body.appendChild(score);
+    var dropEgg = document.createElement('h1');
+    dropEgg.innerText = 'Drop '+n2;
+    document.body.appendChild(dropEgg);
+    dropEgg.style.position = 'absolute';
+    dropEgg.style.right = '10px';
+    dropEgg.style.top = '10px';
+
+
+    var e = document.onkeydown = movingBasket;
+    var ele = document.createElement('img');
+    console.log(ele);
+
+
+
+    ele.setAttribute('src', 'basket.png');
+    ele.style.position = 'absolute';
+    ele.style.bottom = '20px';
+    ele.style.width = '170px';
+    ele.style.height = '100px';
+    var keyR = 1;
+
+    var body = document.body;
+    body.appendChild(ele);
+
+    function movingBasket(e) {
+        console.log(e.keyCode);
+        e.keyCode = 39;
+        e.keyCode = 37;
+        if (e.keyCode === 39) {
+            if (keyR < (document.body.clientWidth - 150)) {
+                keyR = keyR + 60;
+                console.log(ele.style.left = ++keyR + "px");
+            } else {
+                keyR = (document.body.clientWidth - 150);
+            }
+            ele.style.left = keyR + "px"
+
+        }
+
+        if (e.keyCode === 37) {
+            if (keyR > 0) {
+                keyR = keyR - 60;
+                console.log(ele.style.left = --keyR + "px");
+
+            } else {
+                ele.style.left = 0 + "px";
+            }
+
+
+        }
+
+
+    }
+
+    function makeDrop() {
+        var top = 0;
+        var left = Math.random() * 1000;
+        var add = document.createElement('img');
+
+        add.setAttribute('src', 'egg.png');
+
+        add.style.width = '40px';
+        add.style.height = '60px';
+
+        document.body.appendChild(add);
+
+        var time = setInterval(function () {
+            add.style.position = 'absolute';
+            add.style.left = left + 'px';
+
+            add.style.top = ++top + 'px';
+            if (add.style.top === document.body.clientHeight - 100 + 'px') {
+                var increasePxOfAdd = parseInt(add.style.left);
+                if (increasePxOfAdd > keyR && increasePxOfAdd < (keyR + 170)) {
+                    score.innerText = 'Score '+  ++n;
+                } else {
+
+                    dropEgg.innerText = 'Drop  ' + ++n2;
+
+                    if (n2 >= 10) {
+                        alert('Game Over');
+                        location.reload();
+                    }
+
+                }
+
+                clearInterval(time);
+                document.body.removeChild(add);
+            }
+
+
+        }, 1);
+
+
+    }
+
+    setInterval(makeDrop, 1000);
+
+
+</script>
+</body>
+</html>
